@@ -1,0 +1,50 @@
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+
+import Button from '../components/Button'
+import { Form, Field } from '../components/Form'
+
+import { getUrl } from '../helpers/url-helper'
+import { postJson } from '../helpers/fetch-helper'
+
+import AuthContext from '../context/auth'
+
+export default ({ }) => {
+  const history = useHistory()
+  const { account, setAccount } = React.useContext(AuthContext)
+
+  const handleSignIn = (data) => {
+    postJson(getUrl('/api/login'), data)
+      .then(account => {
+        setAccount(account)
+        history.replace('/')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  React.useState(() => {
+    if (account != null) {
+      history.replace('/')
+    }
+  }, [account])
+
+  return <>
+    <Form onSubmit={handleSignIn} >
+      <Field
+        type='email'
+        name='email'
+        placeholder='E-mail'
+        defaultValue='k.karsopawiro@gmail.com'
+      />
+      <Field
+        type='password'
+        name='password'
+        placeholder='Password'
+        defaultValue='Prolo757137'
+      />
+      <Button>Sign in</Button>
+    </Form>
+  </>
+}
