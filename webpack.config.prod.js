@@ -16,7 +16,8 @@ module.exports = {
       {
         test: /\.js$/,
         use: [
-          { loader: 'babel-loader' }
+          { loader: 'babel-loader' },
+          { loader: 'ifdef-loader', options: { IS_PROD: true } } 
         ]
       },
       {

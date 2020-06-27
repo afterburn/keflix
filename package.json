@@ -34,6 +34,7 @@
     "copy-webpack-plugin": "^6.0.2",
     "create-process": "0.0.8",
     "html-webpack-plugin": "^4.3.0",
+    "ifdef-loader": "^2.1.5",
     "svg-inline-loader": "^0.8.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
