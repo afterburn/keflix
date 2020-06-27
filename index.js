@@ -23,11 +23,11 @@ const accounts = {
     users: [
       {
         name: 'Kevin',
-        avatar: 'http://localhost:3000/avatars/default/008.png'
+        avatar: 'default/008.png'
       },
       {
         name: 'Rassana',
-        avatar: 'http://localhost:3000/avatars/default/004.png'
+        avatar: 'default/004.png'
       }
     ]
   }

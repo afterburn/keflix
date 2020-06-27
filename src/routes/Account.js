@@ -5,13 +5,16 @@ import { useHistory } from 'react-router-dom'
 import AuthContext from '../context/auth'
 import Loading from '../components/Loading'
 
+import { getUrl } from '../helpers/url-helper'
+
 const User = styled(({ className, index, data, onSelect }) => {
   const handleClick = (e) => {
     onSelect(index)
   }
 
+  const avatar = getUrl(`/avatars/${data.avatar}`)
   return <div className={className} onClick={handleClick}>
-    <div className='avatar' style={{ backgroundImage: `url('${data.avatar}')`}} />
+    <div className='avatar' style={{ backgroundImage: `url('${avatar}')`}} />
     <span>{data.name}</span>
   </div>
 })`
