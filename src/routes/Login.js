@@ -37,13 +37,11 @@ export default styled(({ className }) => {
         type='email'
         name='email'
         placeholder='E-mail'
-        defaultValue='k.karsopawiro@gmail.com'
       />
       <Field
         type='password'
         name='password'
         placeholder='Password'
-        defaultValue='Prolo757137'
       />
       <Button>Sign in</Button>
     </Form>
