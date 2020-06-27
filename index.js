@@ -35,7 +35,7 @@ const accounts = {
 
 app.post('/api/login', (req, res) => {
   const { email, password} = req.body
-  
+
   if (!accounts.hasOwnProperty(email)) {
     return res.status(200).json({ errors: [Errors.InvalidCredentials] })
   }
