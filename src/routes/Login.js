@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import Button from '../components/Button'
@@ -9,7 +10,7 @@ import { postJson } from '../helpers/fetch-helper'
 
 import AuthContext from '../context/auth'
 
-export default ({ }) => {
+export default styled(({ className }) => {
   const history = useHistory()
   const { account, setAccount } = React.useContext(AuthContext)
 
@@ -30,8 +31,8 @@ export default ({ }) => {
     }
   }, [account])
 
-  return <>
-    <Form onSubmit={handleSignIn} >
+  return <div className={className}>
+    <Form onSubmit={handleSignIn} width={300}>
       <Field
         type='email'
         name='email'
@@ -46,5 +47,10 @@ export default ({ }) => {
       />
       <Button>Sign in</Button>
     </Form>
-  </>
-}
+  </div>
+})`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+`

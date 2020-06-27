@@ -19,10 +19,17 @@ app.use('/avatars', express.static(path.join(__dirname, 'data', 'avatars')))
 const accounts = {
   'k.karsopawiro@gmail.com': {
     email: 'k.karsopawiro@gmail.com',
-    first_name: 'Kevin',
-    last_name: 'Karsopawiro',
     password: 'Prolo757137',
-    avatar: 'http://localhost:3000/avatars/default/008.png'
+    users: [
+      {
+        name: 'Kevin',
+        avatar: 'http://localhost:3000/avatars/default/008.png'
+      },
+      {
+        name: 'Rassana',
+        avatar: 'http://localhost:3000/avatars/default/004.png'
+      }
+    ]
   }
 }
 

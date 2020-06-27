@@ -13,3 +13,12 @@ body {
 a {
   text-decoration: none;
 }
+
+@keyframes dash {
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -130;
+  }  
+}

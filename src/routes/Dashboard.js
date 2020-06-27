@@ -1,14 +1,15 @@
 import React from 'react'
 
+import Loading from '../components/Loading'
 import Header from '../components/Header'
 
 import AuthContext from '../context/auth'
 
 export default () => {
-  const { loading, account } = React.useContext(AuthContext)
+  const { loading, account, selectedUser } = React.useContext(AuthContext)
   
-  if (loading || account == null) {
-    return <>Loading</>
+  if (loading || account == null || selectedUser == null) {
+    return <Loading />
   }
 
   return <>

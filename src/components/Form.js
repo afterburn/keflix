@@ -35,7 +35,7 @@ export const Form = styled(({ className, children, onSubmit}) => {
     </form>
   </FormContext.Provider>
 })`
-
+  width: ${props => props.width + 'px' || 'auto'};
 `
 
 export const Field = styled(({ className, type, name, placeholder }) => {
@@ -57,8 +57,12 @@ export const Field = styled(({ className, type, name, placeholder }) => {
     />
   </div>
 })`
+  width: 100%;
+  margin-bottom: ${props => props.theme.padding(2)};
+
   input {
+    color: black;
+    width: 100%;
     padding: ${props => props.theme.padding(2)};
   }
-  margin-bottom: ${props => props.theme.padding(2)};
 `

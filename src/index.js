@@ -17,14 +17,19 @@ import { getJson } from './helpers/fetch-helper'
 
 const AppWrapper = styled(({ className, children }) => {
   const history = useHistory()
-  const { setAccount, setLoading } = React.useContext(AuthContext)
+  const { setAccount, setLoading, selectedUser } = React.useContext(AuthContext)
 
   React.useEffect(() => {
     getJson(getUrl('/api/me'))
       .then(account => {
         setAccount(account)
         setLoading(false)
-        history.push('/browse')
+
+        if (selectedUser == null) {
+          history.replace('/')
+        }
+        // TODO: find a way to detect if has selected a user recently.
+        // history.push('/browse')
       })
       .catch(err => {
         setLoading(false)

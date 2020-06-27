@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import AuthContext from '../context/auth'
 
 export default styled(({ className }) => {
-  const { account } = React.useContext(AuthContext)
+  const { selectedUser } = React.useContext(AuthContext)
 
   return <div className={className}>
-    <div className='avatar' style={{backgroundImage: `url('${account.avatar}')` }} />
+    <div className='avatar' style={{backgroundImage: `url('${selectedUser.avatar}')` }} />
   </div>
 })`
 margin-left: auto;
