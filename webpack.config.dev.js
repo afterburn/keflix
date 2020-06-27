@@ -1,6 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+
+console.log('running development build')
+
 module.exports = {
   mode: 'development',
   entry: ['@babel/polyfill', path.join(__dirname, 'src', 'index.js')],
