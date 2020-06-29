@@ -42,7 +42,10 @@ module.exports = (torrentUrl, folderPath) => {
           resolve(torrent)
           clearInterval(progressInterval)
         })
-        torrent.on('error', (err) => reject(err))
+        torrent.on('error', (err) => {
+          process.emit('error', err)
+          reject(err)
+        })
       })
     })
   }
@@ -103,8 +106,9 @@ module.exports = (torrentUrl, folderPath) => {
 
   const run = async () => {
     try {
-      console.log('downloading torrent')
+console.log('creating folder')
       await createFolder(folderPath)
+console.log('downloading torrent')
       const torrent = await downloadTorrent(torrentUrl, folderPath)
       const mp4 = torrent.files.find(file => file.name.endsWith('.mp4'))
       const moviePath = path.join(folderPath, mp4.path)

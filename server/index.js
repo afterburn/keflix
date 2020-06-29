@@ -83,6 +83,10 @@ const scheduleDownload = async ({ slug, movieId, type, url }) => {
   const folderPath = path.join(__dirname, 'data', 'movies', slug, type)
   const process = downloadTorrent(url, folderPath)
   let pid = 0
+  process.on('error', (err) => {
+    console.log(err)
+  })
+
   process.on('start', (torrent) => {
     console.log('download started')
     jobs.push({
