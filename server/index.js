@@ -9,7 +9,6 @@ const routes = require('./routes')
 const Errors = require('./errors')
 const WebSocket = require('ws')
 const downloadTorrent = require('./jobs/download-torrent')
-const prettyBytes = require('pretty-bytes')
 const crypto = require('crypto')
 
 const wss = new WebSocket.Server({ noServer: true })

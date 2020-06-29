@@ -7,9 +7,9 @@ export default styled(({ className }) => {
   const [jobs, setJobs] = React.useState([])
 
   const getWebSocketUrl = () => {
-    let result = 'wss://localhost:3001'
+    let result = 'ws://localhost:3000'
 /// #if IS_PROD
-    result = 'wss://keflix.net:3001'
+    result = 'wss://keflix.net'
 /// #endif
     return result
   }
