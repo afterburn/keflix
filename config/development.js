@@ -2,18 +2,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
-const mode = (process.argv[2] === 'prod' || process.argv[2] === 'production')
-  ? 'production'
-  : 'development'
-
-if (mode === 'production') {
-  console.log('running production build')
-} else {
-  console.log('running development build')
-}
-
 module.exports = {
-  mode: mode,
+  mode: 'development',
   entry: ['@babel/polyfill', path.join(__dirname, '..', 'client', 'src', 'index.js')],
   output: {
     filename: 'bundle.js',
@@ -31,7 +21,7 @@ module.exports = {
           {
             loader: 'ifdef-loader',
             options: {
-              IS_PROD: mode === 'production'
+              IS_PROD: false
             }
           } 
         ]

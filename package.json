@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "node scripts/develop.js",
-    "build": "webpack --config config/webpack.client.js",
-    "build-hot": "webpack -w --config config/webpack.client.js",
-    "build-prod": "webpack  --config config/webpack.client.js prod",
+    "build": "webpack --config config/development.js",
+    "build-hot": "webpack -w --config config/development.js",
+    "build-prod": "webpack --config config/production.js",
     "serve": "node server/index.js",
     "serve-hot": "nodemon server/index.js"
   },
