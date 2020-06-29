@@ -33,8 +33,10 @@ module.exports = (torrentUrl, folderPath) => {
 
   const downloadTorrent = (torrentFile, destination) => {
     return new Promise((resolve, reject) => {
+      console.log('downloading torrent:', torrentFile)
       const client = new WebTorrent()
       client.add(torrentFile, { path: destination }, (torrent) => {
+        console.log('torrentInfo received')
         process.emit('start', torrent)
         const progressInterval = setInterval(() => handleProgress(torrent), 500)
         handleProgress(torrent)
@@ -102,12 +104,12 @@ module.exports = (torrentUrl, folderPath) => {
     try {
       console.log('creating folder')
       await createFolder(folderPath)
-      console.log('downloading torrent')
       let torrent
       if (torrentUrl.startsWith('http')) {
         console.log('torrent is url')
         const torrentPath = path.join(folderPath, 'tmp')
         await downloadFile(torrentUrl, torrentPath, '.torrent')
+        console.log('torrent file downloaded')
         torrent = await downloadTorrent(torrentPath + '.torrent', folderPath)
       } else {
         console.log('torrent is file')
