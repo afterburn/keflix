@@ -6,8 +6,17 @@ export default styled(({ className }) => {
   const [isConnected, setIsConnected] = React.useState(false)
   const [jobs, setJobs] = React.useState([])
 
+  const getWebSocketUrl = () => {
+    let result = 'ws://localhost:3001'
+/// #if IS_PROD
+    result = 'ws://keflix.net:3001'
+/// #endif
+    return result
+  }
+
   React.useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3001')
+    const wsUrl = getWebSocketUrl()
+    const ws = new WebSocket(wsUrl)
     ws.onopen = () => {
       setIsConnected(true)
     }
