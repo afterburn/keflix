@@ -3,6 +3,7 @@ const path = require('path')
 const mkdirp = require('mkdirp')
 const rimraf = require('rimraf')
 const WebTorrent = require('webtorrent')
+const { downloadFile } = require('../helpers/download-helper')
 
 module.exports = (torrentUrl, folderPath) => {
   const process = {
@@ -97,25 +98,27 @@ module.exports = (torrentUrl, folderPath) => {
     })
   }
 
-  const cleanup = async (folderPath) => {
-    const files = await getFiles(folderPath)
-    await Promise.all(files
-      .filter(file => path.extname(file) !== '.mp4')
-      .map(file => removeFile(path.join(folderPath, file))))
-  }
-
   const run = async () => {
     try {
-console.log('creating folder')
+      console.log('creating folder')
       await createFolder(folderPath)
-console.log('downloading torrent')
-      const torrent = await downloadTorrent(torrentUrl, folderPath)
+      console.log('downloading torrent')
+      let torrent
+      if (torrentUrl.startsWith('http')) {
+        console.log('torrent is url')
+        const torrentPath = path.join(folderPath, 'tmp')
+        await downloadFile(torrentUrl, torrentPath, '.torrent')
+        torrent = await downloadTorrent(torrentPath + '.torrent', folderPath)
+      } else {
+        console.log('torrent is file')
+        torrent = await downloadTorrent(torrentUrl, folderPath)
+      }
+
       const mp4 = torrent.files.find(file => file.name.endsWith('.mp4'))
       const moviePath = path.join(folderPath, mp4.path)
       torrent.destroy()
       process.emit('done', moviePath)
-      // await moveMp4File(torrent, folderPath)
-      // await cleanup(folderPath)
+      await removeFile(path.join(folderPath, 'tmp.torrent'))
       console.log('done')
     } catch(ex) {
       console.log(ex)
