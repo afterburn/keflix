@@ -1,4 +1,5 @@
 const path = require('path')
+const http = require('http')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -11,9 +12,7 @@ const downloadTorrent = require('./jobs/download-torrent')
 const prettyBytes = require('pretty-bytes')
 const crypto = require('crypto')
 
-const wss = new WebSocket.Server({
-  port: 3001
-})
+const wss = new WebSocket.Server({ noServer: true })
 
 const jobs = []
 
@@ -21,7 +20,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     console.log('received: %s', message)
   })
- 
+
   ws.send(JSON.stringify({
     type: 'UPDATE_JOBS',
     payload: jobs
@@ -65,6 +64,15 @@ connection.connect((err) => {
 
 const app = express()
 
+const server = http.createServer(app)
+
+server.on('upgrade', (req, socket, head) => {
+	wss.handleUpgrade(req, socket, head, (ws) => {
+		wss.emit('connection', ws, req)
+	})
+})
+
+
 app.use(bodyParser.json({}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')))
@@ -93,9 +101,9 @@ const scheduleDownload = async ({ slug, movieId, type, url }) => {
     job.downloaded = torrent.downloaded
     job.downloadSpeed = torrent.downloadSpeed
   })
-  
+
   process.on('done', async (moviePath) => {
-    
+
     const p = moviePath.replace(__dirname, '').replace(/\\/gim, '\\\\')
     const hash = crypto.createHash('md5').update(p).digest('hex')
     const result = await query(`INSERT INTO movie_versions (movie_id, version, path, hash) VALUES(${movieId}, '${type}', '${p}', '${hash}')`)
@@ -123,6 +131,6 @@ app.get('*', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'))
 })
 
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log('keflix.net listening on http://localhost:3000')
 })
